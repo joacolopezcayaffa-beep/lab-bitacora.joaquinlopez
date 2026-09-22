@@ -7,17 +7,17 @@ BASE_DIR = Path.cwd()
 
 # 2. Construir la ruta relativa de forma segura utilizando el operador /
 # Estructura esperada: tu_proyecto/data/raw/datos.csv
-archivo = "cantidad_de_residuos_en_la_estacion_de_transferencia_2023.csv"
-ruta_csv = BASE_DIR / "clases" / "clase4" / archivo
+archivo = "autoscope_01_2021_velocidad.csv"
+ruta_csv = BASE_DIR / "data" / archivo
 
-ruta_csv = BASE_DIR / "clases" / "clase4" / "cantidad_de_residuos_en_la_estacion_de_transferencia_2023.csv"
+ruta_csv = BASE_DIR / "data" / "autoscope_01_2021_velocidad.csv"
 
 # 3. Verificar que el archivo realmente existe antes de cargarlo
 if not ruta_csv.exists():
     raise FileNotFoundError(f"No se encontró el archivo en: {ruta_csv}")
 
 # 4. Cargar el archivo CSV
-df = pd.read_csv(ruta_csv)
+df = pd.read_csv(ruta_csv, sep= ";")
 
 # 5. Inspección inicial de los datos
 print(f"--- Archivo cargado exitosamente desde: {ruta_csv.name} ---")
@@ -25,13 +25,16 @@ print(df.info())
 print("\nPrimeras 5 filas:")
 print(df.head())
 
-## 51. Dimensiones y estructura de los datos (Equivalente a str(df))
+## 5.1. Dimensiones y estructura de los datos (Equivalente a str(df))
 df.info()
 # Nota: df.shape te da exactamente las dimensiones (filas, columnas) -> (1222, 41)
 df.shape
 
-# 2. Filas únicas: detectando la columna que contiene el ID (Equivalente a length(unique(...)))
-df["matricula_letra"].nunique()
+# 5.2. Filas únicas: detectando la columna que contiene el ID (Equivalente a length(unique(...)))
+df[""].nunique()
+# Si df["columna"].nunique() es igual a len(df), esa columna es un ID único
+print("\nValores únicos por columna (Buscar candidatos a ID):")
+print(df.nunique())
 
 # 5.3 Datos faltantes
 
@@ -40,3 +43,7 @@ df.isnull().sum()  # Conteo de NA por columna
 
 ## 5.4 Duplicados
 df.duplicated().sum() # Cantidad de filas exactamente iguales
+
+## 5.5. Primeras filas
+print("\nPrimeras 5 filas:")
+print(df.head(30,10))
